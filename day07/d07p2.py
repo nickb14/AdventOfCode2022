@@ -30,18 +30,23 @@ def main():
             else:
                 folders[last][0] += int(line[:line.find(' ')])
     
-    sumOfSmalls = 0
-    #reversed so folders within folders are updated first
+    #this just updates folders within folders, so that content[0] is the accurate total size
     for folder, content in reversed(folders.items()):
         size = content[0]
         for i in range(1, len(content)):
             size += folders[content[i]][0]
         folders[folder][0] = size
-        #print(folder + ": " + str(size))
-        if size <= 100000:
-            sumOfSmalls += size
     
-    print(sumOfSmalls)
+    sizes = []
+    for content in folders.values():
+        sizes.append(content[0])
+    sizes.sort()
+
+    minimumSize = sizes[-1] - (70000000-30000000)
+    for size in sizes:
+        if minimumSize < size:
+            print(size)
+            break
 
 
 main()
